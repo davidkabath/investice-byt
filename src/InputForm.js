@@ -56,8 +56,8 @@ const InputForm = (props) => {
   const decimalPattern = /^[0-9]*.?[0-9]*$/;
 
   return (
-    <div>
-      <Container fluid className="disclaimer-strip">
+    <Container fluid>
+      <Alert className="disclaimer-strip">
         <Alert.Link
           className="text-reset linkClass"
           href="#"
@@ -65,7 +65,7 @@ const InputForm = (props) => {
         >
           {showDisclaimer ? "Skrýt" : "Zobrazit"} vysvětlivky a popis výpočtu
         </Alert.Link>
-      </Container>
+      </Alert>
       <Container className="inputs">
         <div className="row justify-content-center">
           {showDisclaimer ? (
@@ -458,7 +458,7 @@ const InputForm = (props) => {
           </Form>
         </div>
       </Container>
-    </div>
+    </Container>
   );
 };
 

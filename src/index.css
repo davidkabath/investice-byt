@@ -7,9 +7,10 @@ html {
 body {
   font-family: "Raleway", sans-serif;
   font-size: 12px;
+  padding: 0px;
 }
 
-.all {
+.main-container {
   margin: 0px;
   padding: 0px;
 }
@@ -35,12 +36,12 @@ body {
   text-align: center;
   background-color: rgb(247, 247, 247);
   font-size: 16px;
-
+  margin-top: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: rgb(220, 220, 220);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(220, 220, 220);
 }
 
 .disclaimer-text {

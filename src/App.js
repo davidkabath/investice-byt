@@ -255,7 +255,7 @@ class App extends Component {
     const { results, mortgageEnabled, resultsProspect } = this.state;
 
     return (
-      <Container fluid className="all">
+      <Container fluid className="main-container">
         <Header />
         <InputForm
           onSubmit={this.onSubmit}
