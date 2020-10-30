@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a21cc612c27e30fd4d4ca23f6e038d3b",
+    "revision": "a458f97d89bfeff2cf4ed71d658ce21f",
     "url": "/investice-byt/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/investice-byt/static/css/2.d9ad5f5c.chunk.css"
   },
   {
-    "revision": "3d4b59f6949e3f3ed913",
-    "url": "/investice-byt/static/css/main.3cd03ac6.chunk.css"
+    "revision": "da66fc6d0acd12e8e965",
+    "url": "/investice-byt/static/css/main.c8263fda.chunk.css"
   },
   {
     "revision": "2f48eec7782c8fdfa635",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/investice-byt/static/js/2.997ea755.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3d4b59f6949e3f3ed913",
-    "url": "/investice-byt/static/js/main.d6af2d21.chunk.js"
+    "revision": "da66fc6d0acd12e8e965",
+    "url": "/investice-byt/static/js/main.b2081ad3.chunk.js"
   },
   {
     "revision": "ebf0ba2168a826fcf30a",
