@@ -4,6 +4,8 @@ import Header from "./Header";
 import InputForm from "./InputForm";
 import Results from "./Results";
 
+import { Container } from "react-bootstrap";
+
 import "./App.css";
 import "./index.css";
 
@@ -253,7 +255,7 @@ class App extends Component {
     const { results, mortgageEnabled, resultsProspect } = this.state;
 
     return (
-      <div>
+      <Container fluid className="all">
         <Header />
         <InputForm
           onSubmit={this.onSubmit}
@@ -269,7 +271,7 @@ class App extends Component {
             resultsProspect={resultsProspect}
           />
         </div>
-      </div>
+      </Container>
     );
   }
 }

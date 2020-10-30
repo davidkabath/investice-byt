@@ -9,6 +9,11 @@ body {
   font-size: 12px;
 }
 
+.all {
+  margin: 0px;
+  padding: 0px;
+}
+
 .header {
   color: white;
   text-align: center;
