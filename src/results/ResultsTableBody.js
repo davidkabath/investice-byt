@@ -3,10 +3,7 @@ import React from "react";
 const ResultsTableRow = (props) => {
   const row = props.rowData.map((item, index) => {
     return (
-      <td
-        key={index}
-        className={"align-middle " + (index === 0 ? "table-cell-bold" : "")}
-      >
+      <td key={index} className={"align-middle"}>
         {item}%
       </td>
     );
