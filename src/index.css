@@ -99,6 +99,11 @@ body {
   text-align: center;
 }
 
+.result-table-header {
+  width: 50%;
+  vertical-align: middle;
+}
+
 .table-cell-bold {
   font-weight: 900;
 }

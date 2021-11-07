@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-bootstrap";
 import ErrorMessage from "./ErrorMessage";
+import Legend from "./Legend";
 
 const InputForm = (props) => {
   const {
@@ -68,117 +69,70 @@ const InputForm = (props) => {
       </Alert>
       <Container className="inputs">
         <div className="row justify-content-center">
-          {showDisclaimer ? (
-            <Alert variant="danger" className="disclaimer-text">
-              <Alert.Heading>Vysvětlivky</Alert.Heading>
-              Nemovitost
-              <ul>
-                <li>
-                  Vlastní investice (VI) - finance z vlastní kapsy. Součet
-                  vlastní investice a výše hypotéky odpovídá ceně nemovitosti.
-                </li>
-                <li>
-                  Počáteční investice (PI) - náklady na počáteční rekonstrukci
-                  nemovitosti. Např. rekonstrukce kuchyně, koupelny nebo nová
-                  podlaha.
-                </li>
-                <li>Měsíční nájem (MN) - nájemné požadované po nájemníkovi.</li>
-                <li>
-                  Měsíční výdaje v procentech k nájmu (MV) - měsíční výdaje na
-                  daň z nemovitosti, pojištění nemovitosti, apod.
-                </li>
-                <li>
-                  Počet měsíců v roce, kdy nebude nemovitost pronajata (PM) -
-                  výpadek příjmů z nájmu v případě, kdy zůstává nemovitost
-                  nepronajata. Např. při hledání nového nájemníka, apod.
-                </li>
-                <li>
-                  Fond na interní opravy (ročně) (FO) - finance na opravy
-                  nemovitosti během doby investice. Např. při rekonstrukci
-                  kuchyně či jiných nezbytných opravách.
-                </li>
-              </ul>
-              Hypotéka
-              <ul>
-                <li>
-                  Výše (VH) - výše hypotéky. Součet výše hypotéky a vlastní
-                  investice odpovídá ceně nemovitosti.
-                </li>
-                <li>Doba splácení v celých letech (DH) - délka hypotéky.</li>
-                <li>Úrok p.a. (UH) - roční úrok hypotéky.</li>
-              </ul>
-              Výhled
-              <ul>
-                <li>
-                  Nárust/pokles hodnoty nemovitosti za dobu investice v
-                  procentech (HN) - úprava výpočtu výnosu investice o
-                  spekulativní nárust či pokles hodnoty nemovitosti za dobu
-                  investice.
-                </li>
-              </ul>
-              <Alert.Heading>Popis výpočtu</Alert.Heading>
-              <ul>
-                <li>
-                  Čistý měsíční příjem z nájmu (CM) = (MN x (12 - PM) - FO - MN
-                  x (12 - PM) x MV - (MN x (12 - PM) - MN x (12 - PM) x MV - FO
-                  - 24840) x 0.15) / 12; (0.15 = 15% = daň z příjmu; 12 = počet
-                  měsíců v roce; 24840 Kč = sleva na dani na poplatníka (2020)).
-                </li>
-                <li>
-                  Měsíční splátka hypotéky (MH) = VH x (1 + UH/12){" "}
-                  <sup>DH x 12</sup> x ((UH/12) / ((1 + UH/12){" "}
-                  <sup>DH x 12</sup> - 1)); (12 = počet měsíců v roce).
-                </li>
-                <li>
-                  Měsíční doplatek na hypotéku = Měsíční splátka hypotéky -
-                  Čistý měsíční příjem z nájmu.
-                </li>
-                <li>
-                  Čistý výnos investice p.a. = ((CM x 12 x DI + (VH + VI) - MH x
-                  12 x DH - PI - VI) / (MH x 12 x DH + PI + VI) / DI) x 100; (12
-                  = počet měsíců v roce; DI = délka investice v letech)
-                </li>
-                <li>
-                  Čistý výnos investice p.a. se započtením nárustu/poklesu
-                  hodnoty investice = ((CM x 12 x DI + (VH + VI) x (1 + HN) - MH
-                  x 12 x DH - PI - VI) / (MH x 12 x DH + PI + VI) / DI) x 100;
-                  (12 = počet měsíců v roce; DI = délka investice v letech)
-                </li>
-              </ul>
-            </Alert>
-          ) : (
-            ""
-          )}
-          ;
+          {showDisclaimer && <Legend />};
           <Form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="inputForm-header">
-              <h4>Nemovitost</h4>
+              <h4>Investice</h4>
             </div>
             <Form.Group as={Row}>
               <Form.Label column sm={8}>
-                Vlastní investice
+                Délka investice v celých letech
               </Form.Label>
               <Col sm={4}>
                 <InputGroup>
                   <Form.Control
                     type="number"
-                    placeholder={defaultInput.propertyInvestment}
-                    name="propertyInvestment"
+                    placeholder={defaultInput.investmentPeriod}
+                    name="investmentPeriod"
+                    ref={register({
+                      required: true,
+                      min: 5,
+                      max: 50,
+                      pattern: integerPattern,
+                      validate: (value) => {
+                        return value >= getValues()["mortgagePeriod"];
+                      },
+                    })}
+                    defaultValue={
+                      useDefaultInput ? defaultInput.investmentPeriod : ""
+                    }
+                  />
+                  {errors.investmentPeriod ? (
+                    <ErrorMessage text="5 - 50 let a >= délka hypotéky" />
+                  ) : (
+                    ""
+                  )}
+                </InputGroup>
+              </Col>
+            </Form.Group>
+            <div className="inputForm-header">
+              <h4>Nemovitost</h4>
+            </div>
+            <Form.Group as={Row}>
+              <Form.Label column sm={8}>
+                Cena nemovitosti
+              </Form.Label>
+              <Col sm={4}>
+                <InputGroup>
+                  <Form.Control
+                    type="number"
+                    placeholder={defaultInput.propertyCost}
+                    name="propertyCost"
                     ref={register({
                       required: true,
                       min: 100000,
-                      max: 20000000,
+                      max: 50000000,
                       pattern: integerPattern,
                     })}
                     defaultValue={
-                      useDefaultInput ? defaultInput.propertyInvestment : ""
+                      useDefaultInput ? defaultInput.propertyCost : ""
                     }
                   />
                   <InputGroup.Append>
                     <InputGroup.Text>Kč</InputGroup.Text>
                   </InputGroup.Append>
-                  {errors.propertyInvestment ? (
-                    <ErrorMessage text="100 000 - 20 000 000 Kč" />
+                  {errors.propertyCost ? (
+                    <ErrorMessage text="100 000 - 50 000 000 Kč" />
                   ) : (
                     ""
                   )}
@@ -187,29 +141,29 @@ const InputForm = (props) => {
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column sm={8}>
-                Počáteční investice
+                Cena počáteční rekonstrukce
               </Form.Label>
               <Col sm={4}>
                 <InputGroup>
                   <Form.Control
                     type="number"
-                    placeholder={defaultInput.initialMaintenence}
-                    name="initialMaintenence"
+                    placeholder={defaultInput.initialMaintenance}
+                    name="initialMaintenance"
                     ref={register({
                       required: true,
                       min: 0,
-                      max: 2000000,
+                      max: 5000000,
                       pattern: integerPattern,
                     })}
                     defaultValue={
-                      useDefaultInput ? defaultInput.initialMaintenence : ""
+                      useDefaultInput ? defaultInput.initialMaintenance : ""
                     }
                   />
                   <InputGroup.Append>
                     <InputGroup.Text>Kč</InputGroup.Text>
                   </InputGroup.Append>
-                  {errors.initialMaintenence ? (
-                    <ErrorMessage text="0 - 2 000 000 Kč" />
+                  {errors.initialMaintenance ? (
+                    <ErrorMessage text="0 - 5 000 000 Kč" />
                   ) : (
                     ""
                   )}
@@ -330,6 +284,37 @@ const InputForm = (props) => {
                 </InputGroup>
               </Col>
             </Form.Group>
+            <Form.Group as={Row}>
+              <Form.Label column sm={8}>
+                Nárust/pokles hodnoty nemovitosti za dobu investice v procentech
+              </Form.Label>
+              <Col sm={4}>
+                <InputGroup>
+                  <Form.Control
+                    type="number"
+                    placeholder={defaultInput.valueDevelopment}
+                    name="valueDevelopment"
+                    ref={register({
+                      required: true,
+                      min: -100,
+                      max: 200,
+                      pattern: integerPattern,
+                    })}
+                    defaultValue={
+                      useDefaultInput ? defaultInput.valueDevelopment : ""
+                    }
+                  />
+                  <InputGroup.Append>
+                    <InputGroup.Text>%</InputGroup.Text>
+                  </InputGroup.Append>
+                  {errors.valueDevelopment ? (
+                    <ErrorMessage text="-100 - 200 %" />
+                  ) : (
+                    ""
+                  )}
+                </InputGroup>
+              </Col>
+            </Form.Group>
             <div className="inputForm-header">
               <h4>
                 Hypotéka{" "}
@@ -359,8 +344,11 @@ const InputForm = (props) => {
                     ref={register({
                       required: mortgageEnabled,
                       min: 100000,
-                      max: 20000000,
+                      max: 50000000,
                       pattern: integerPattern,
+                      validate: (value) => {
+                        return value <= getValues()["propertyCost"];
+                      },
                     })}
                     disabled={!mortgageEnabled}
                     defaultValue={
@@ -371,7 +359,7 @@ const InputForm = (props) => {
                     <InputGroup.Text>Kč</InputGroup.Text>
                   </InputGroup.Append>
                   {errors.mortgageValue && mortgageEnabled ? (
-                    <ErrorMessage text="100 000 - 20 000 000 Kč" />
+                    <ErrorMessage text="100 000 - 50 000 000 Kč a <= cena nemovitosti" />
                   ) : (
                     ""
                   )}
@@ -392,7 +380,7 @@ const InputForm = (props) => {
                   name="mortgagePeriod"
                   ref={register({
                     required: mortgageEnabled,
-                    min: 2,
+                    min: 5,
                     max: 35,
                     pattern: integerPattern,
                   })}
@@ -403,7 +391,7 @@ const InputForm = (props) => {
                   }
                 />
                 {errors.mortgagePeriod && mortgageEnabled ? (
-                  <ErrorMessage text="2 - 35 let" />
+                  <ErrorMessage text="5 - 35 let" />
                 ) : (
                   ""
                 )}

@@ -2,14 +2,10 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import ResultsTableBody from "./ResultsTableBody";
 import ResultsTableHeader from "./ResultsTableHeader";
-import ResultsTableDescription from "./ResultsTableDescription";
 
 const SummaryTable = (props) => {
-  const {
-    monthlyMortgagePayment,
-    monthlyNetRevenue,
-    mortgagePeriod,
-  } = props.tablesData;
+  const { monthlyMortgagePayment, monthlyNetRevenue, mortgagePeriod } =
+    props.tablesData;
   const mortgageRevenueDelta = monthlyMortgagePayment - monthlyNetRevenue;
 
   let descriptionsAndValues = [
@@ -55,9 +51,6 @@ const ResultsTable = (props) => {
     <div>
       <Table responsive>
         <SummaryTable tablesData={props.tablesData} />
-      </Table>
-      <Table responsive className="resultsTableDescription">
-        <ResultsTableDescription isValueDevelopmentIncluded={false} />
       </Table>
       <Table bordered striped hover responsive>
         <ResultsTableHeader
