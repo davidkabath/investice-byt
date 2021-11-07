@@ -69,7 +69,7 @@ const InputForm = (props) => {
       </Alert>
       <Container className="inputs">
         <div className="row justify-content-center">
-          {showDisclaimer && <Legend />};
+          {showDisclaimer && <Legend />}
           <Form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="inputForm-header">
               <h4>Investice</h4>
